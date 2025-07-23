@@ -14,8 +14,6 @@ move EmagSU_Monitoring %install_folder%
 cd %install_folder%\EmagSU_Monitoring
 
 
-call setup.bat 1
-
 
 echo "Emag SU Monitoring installed!"
 pause
