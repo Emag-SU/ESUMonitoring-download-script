@@ -5,7 +5,12 @@ Questo è uno script bat che scarica e "installa" il software della telemetria d
 
 ### istruzioni (sulla macchina)
 - connettere la macchina a internet
-- scaricare e installare Python (Last Tested Version: 3.13.5) [qui](https://www.python.org/downloads/release/python-3135/)
+- scaricare e installare Python (Last Tested Version: 3.13.5)
+  - [link](https://www.python.org/downloads/release/python-3135/)
+    - scorrere in fondo fino a Files
+    - scaricare Windows installer (64-bit)
+  - selezionare `add to path`
+  - al messaggio `installation was succesful` cliccare `disable path limit`
 - scaricare e installare git [qua](https://git-scm.com/downloads/win)
 - scaricare l'installer [qui](https://github.com/Emag-SU/ESUMonitoring-download-script/releases/latest/download/install.bat)
   - il browser probabilmente segnalerà il file .bat come sospetto, procedere con il download.
