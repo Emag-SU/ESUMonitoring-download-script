@@ -1,0 +1,59 @@
+name: Create Release with install.bat
+
+on:
+  push:  # Trigger on every push to any branch
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch all tags
+        run: git fetch --tags
+
+      - name: Get latest tag
+        id: get_tag
+        run: |
+          latest_tag=$(git tag --sort=-v:refname | head -n 1)
+          echo "Latest tag: $latest_tag"
+          if [[ $latest_tag =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+            major=${BASH_REMATCH[1]}
+            minor=${BASH_REMATCH[2]}
+            patch=${BASH_REMATCH[3]}
+            patch=$((patch+1))
+            new_tag="v$major.$minor.$patch"
+          else
+            new_tag="v1.0.0"
+          fi
+          echo "new_tag=$new_tag" >> "$GITHUB_OUTPUT"
+
+      - name: Create new tag
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git tag ${{ steps.get_tag.outputs.new_tag }}
+          git push origin ${{ steps.get_tag.outputs.new_tag }}
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+        with:
+          tag_name: ${{ steps.get_tag.outputs.new_tag }}
+          release_name: Release ${{ steps.get_tag.outputs.new_tag }}
+          draft: false
+          prerelease: false
+
+      - name: Upload install.bat
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./install.bat
+          asset_name: install.bat
+          asset_content_type: application/octet-stream
