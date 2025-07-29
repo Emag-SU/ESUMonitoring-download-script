@@ -1,7 +1,8 @@
 name: Create Release with install.bat
 
 on:
-  push:  # Trigger on every push to any branch
+  push:
+    branches: [main]
 
 jobs:
   release:
