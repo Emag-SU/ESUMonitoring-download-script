@@ -57,3 +57,56 @@ jobs:
           asset_path: ./install.bat
           asset_name: install.bat
           asset_content_type: application/octet-stream
+
+      - name: Download lean.zip and full.zip from Repo A latest release
+        run: |
+          GH_API="https://api.github.com"
+          SOURCE_OWNER="your-org-or-username"         # <-- Replace with Repo A owner
+          SOURCE_REPO="repo-a-name"                   # <-- Replace with Repo A name
+
+          mkdir -p downloads
+
+          # Get latest release info
+          release=$(curl -s -H "Authorization: token ${{ secrets.SRC_REPO }}" \
+            "$GH_API/repos/$SOURCE_OWNER/$SOURCE_REPO/releases/latest")
+
+          assets_url=$(echo "$release" | jq -r .assets_url)
+
+          # Get asset download URLs
+          asset_urls=$(curl -s -H "Authorization: token ${{ secrets.SRC_REPO }}" "$assets_url" | jq -r '.[] | {name, url} | @base64')
+
+          for asset in $asset_urls; do
+            _jq() {
+              echo "${asset}" | base64 --decode | jq -r "${1}"
+            }
+
+            name=$(_jq '.name')
+            url=$(_jq '.url')
+
+            if [[ "$name" == "lean.zip" || "$name" == "full.zip" ]]; then
+              echo "Downloading $name..."
+              curl -L -H "Authorization: token ${{ secrets.SRC_REPO }}" \
+                  -H "Accept: application/octet-stream" \
+                  "$url" -o "downloads/$name"
+            fi
+          done
+
+      - name: Upload lean.zip (from Repo A)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: downloads/lean.zip
+          asset_name: lean.zip
+          asset_content_type: application/zip
+
+      - name: Upload full.zip (from Repo A)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: downloads/full.zip
+          asset_name: full.zip
+          asset_content_type: application/zip
