@@ -61,8 +61,8 @@ jobs:
       - name: Download lean.zip and full.zip from Repo A latest release
         run: |
           GH_API="https://api.github.com"
-          SOURCE_OWNER="your-org-or-username"         # <-- Replace with Repo A owner
-          SOURCE_REPO="repo-a-name"                   # <-- Replace with Repo A name
+          SOURCE_OWNER="Emag-SU"
+          SOURCE_REPO="EmagSU_Monitoring"
 
           mkdir -p downloads
 
