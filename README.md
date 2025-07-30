@@ -24,7 +24,7 @@ Questo è uno script bat che scarica e "installa" il software della telemetria d
 
 ### istruzioni (offline)
 - se è la prima volta che installi questo software su una macchina
-  1. (su un computer) scarica questo [link](https://github.com/Emag-SU/EmagSU_Monitoring/releases/latest/download/full.zip)
+  1. (su un computer) scarica questo [link](https://github.com/Emag-SU/ESUMonitoring-download-script/releases/latest/download/full.zip)
   2. estrai lo zip
   3. copia i file su una chiavetta
   4. (sulla macchina) avvia gli installer per python e git, se non già presenti nel sistema
@@ -41,7 +41,7 @@ Questo è uno script bat che scarica e "installa" il software della telemetria d
   9. per cambiare il comportamento dell'acquisizione modificare il config 
 
  - se stai aggiornando questo sistema già presente su una macchina
-   1. (su un computer) scarica questo [link](https://github.com/Emag-SU/EmagSU_Monitoring/releases/latest/download/lean.zip)
+   1. (su un computer) scarica questo [link](https://github.com/Emag-SU/ESUMonitoring-download-script/releases/latest/download/lean.zip)
    2. estrai lo zip
    3. copia i file su una chiavetta
    4. (sulla macchina) vai alla cartella `C:\ESUMonitoring\EmagSU_Monitoring\src\py\main` e copia `config.json` in una cartella esterna a tutte queste
