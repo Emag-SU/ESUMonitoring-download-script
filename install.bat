@@ -6,7 +6,7 @@ echo "Installing Emag SU Monitoring..."
 set install_folder=C:\ESUMonitoring
 if exist "%install_folder%\" goto error_folder_already_exists
 
-git clone --depth 1 https://@github.com/Emag-SU/EmagSU_Monitoring.git
+git clone --depth 1 https://github.com/Emag-SU/EmagSU_Monitoring.git
 
 
 mkdir %install_folder%
